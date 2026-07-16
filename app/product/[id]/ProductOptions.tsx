@@ -12,7 +12,6 @@ export default function ProductOptions({
 
 
   const [selectedColor, setSelectedColor] = useState("");
-
   const [selectedSize, setSelectedSize] = useState("");
 
 
@@ -22,14 +21,14 @@ export default function ProductOptions({
     "M",
     "L",
     "XL",
-    "XXL"
+    "XXL",
   ];
 
 
 
   return (
 
-    <div>
+    <div className="relative z-50">
 
 
 
@@ -54,20 +53,23 @@ export default function ProductOptions({
 
               <button
 
+                type="button"
+
                 key={color.id}
 
-                onClick={()=>setSelectedColor(color.name)}
+                onTouchStart={() => setSelectedColor(color.name)}
 
-                className={`
-                  flex items-center gap-2 rounded-full border px-5 py-2
-                  ${
-                    selectedColor === color.name
-                    ?
-                    "bg-black text-white"
-                    :
-                    ""
-                  }
-                `}
+                onClick={() => setSelectedColor(color.name)}
+
+                className={`relative z-50 flex items-center gap-2 rounded-full border px-5 py-2 ${
+                  
+                  selectedColor === color.name
+
+                  ? "bg-black text-white"
+
+                  : ""
+
+                }`}
 
               >
 
@@ -77,7 +79,10 @@ export default function ProductOptions({
                   className="h-5 w-5 rounded-full border"
 
                   style={{
-                    backgroundColor: color.value
+
+                    backgroundColor:
+                    color.value || "#000"
+
                   }}
 
                 />
@@ -107,6 +112,7 @@ export default function ProductOptions({
 
       {/* SIZES */}
 
+
       <div className="mt-6">
 
 
@@ -124,20 +130,23 @@ export default function ProductOptions({
 
             <button
 
+              type="button"
+
               key={size}
 
-              onClick={()=>setSelectedSize(size)}
+              onTouchStart={() => setSelectedSize(size)}
 
-              className={`
-                rounded border px-5 py-2
-                ${
-                  selectedSize === size
-                  ?
-                  "bg-black text-white"
-                  :
-                  ""
-                }
-              `}
+              onClick={() => setSelectedSize(size)}
+
+              className={`relative z-50 rounded border px-5 py-2 ${
+                
+                selectedSize === size
+
+                ? "bg-black text-white"
+
+                : ""
+
+              }`}
 
             >
 
@@ -153,6 +162,8 @@ export default function ProductOptions({
 
 
       </div>
+
+
 
 
 
@@ -178,6 +189,7 @@ export default function ProductOptions({
 
 
       </div>
+
 
 
 

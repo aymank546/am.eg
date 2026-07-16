@@ -51,12 +51,11 @@ export default async function ProductPage({
 
 
 
-
   const images = [
 
     product.image,
 
-    ...product.images.map((img)=>img.url)
+    ...product.images.map((img) => img.url),
 
   ];
 
@@ -77,7 +76,6 @@ export default async function ProductPage({
 
 
 
-
         <ProductGallery
 
           images={images}
@@ -89,10 +87,7 @@ export default async function ProductPage({
 
 
 
-
-
         <div>
-
 
 
           <h1 className="text-5xl font-bold">
@@ -116,7 +111,6 @@ export default async function ProductPage({
 
 
 
-
           <div className="mt-8">
 
 
@@ -132,7 +126,6 @@ export default async function ProductPage({
 
 
 
-
             <span className="text-4xl font-extrabold">
 
               {product.price} EGP
@@ -140,9 +133,7 @@ export default async function ProductPage({
             </span>
 
 
-
           </div>
-
 
 
 
@@ -160,8 +151,6 @@ export default async function ProductPage({
 
 
 
-
-
           <ProductOptions
 
             product={product}
@@ -172,9 +161,7 @@ export default async function ProductPage({
 
 
 
-
         </div>
-
 
 
 
@@ -184,10 +171,8 @@ export default async function ProductPage({
 
 
 
-
     </main>
 
   );
-
 
 }

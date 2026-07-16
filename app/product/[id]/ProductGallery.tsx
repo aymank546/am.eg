@@ -35,6 +35,7 @@ export default function ProductGallery({
 
 
 
+
   if (images.length === 0) {
 
     return (
@@ -51,17 +52,28 @@ export default function ProductGallery({
 
 
 
+
+
   return (
 
-    <div className="relative h-[500px] overflow-hidden rounded-xl bg-gray-100">
+    <div className="relative z-0 h-[500px] overflow-hidden rounded-xl bg-gray-100">
 
 
       <Image
+
         src={images[current]}
+
         alt="Product"
+
         fill
-        className="object-cover"
+
+        sizes="(max-width: 768px) 100vw, 50vw"
+
+        className="object-cover z-0"
+
       />
+
+
 
 
 
@@ -72,9 +84,11 @@ export default function ProductGallery({
 
           <button
 
+            type="button"
+
             onClick={prevImage}
 
-            className="absolute left-4 top-1/2 -translate-y-1/2 rounded-full bg-black/50 px-4 py-2 text-white"
+            className="absolute z-10 left-4 top-1/2 -translate-y-1/2 rounded-full bg-black/50 px-4 py-2 text-white"
 
           >
 
@@ -85,11 +99,15 @@ export default function ProductGallery({
 
 
 
+
+
           <button
+
+            type="button"
 
             onClick={nextImage}
 
-            className="absolute right-4 top-1/2 -translate-y-1/2 rounded-full bg-black/50 px-4 py-2 text-white"
+            className="absolute z-10 right-4 top-1/2 -translate-y-1/2 rounded-full bg-black/50 px-4 py-2 text-white"
 
           >
 
@@ -99,16 +117,21 @@ export default function ProductGallery({
 
 
 
-          <div className="absolute bottom-4 left-1/2 -translate-x-1/2 rounded-full bg-black/50 px-4 py-1 text-white">
+
+
+
+          <div className="absolute z-10 bottom-4 left-1/2 -translate-x-1/2 rounded-full bg-black/50 px-4 py-1 text-white">
 
             {current + 1} / {images.length}
 
           </div>
 
 
+
         </>
 
       )}
+
 
 
     </div>
