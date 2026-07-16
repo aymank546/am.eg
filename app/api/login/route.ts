@@ -24,21 +24,15 @@ export async function POST(request: Request) {
   });
 
 
-
-  response.cookies.set("admin", "true", {
-
-    httpOnly: false,
-
+  response.cookies.set({
+    name: "admin",
+    value: "true",
+    httpOnly: true,
     secure: true,
-
-    sameSite: "lax",
-
+    sameSite: "none",
     path: "/",
-
     maxAge: 60 * 60 * 24 * 30,
-
   });
-
 
 
   return response;
