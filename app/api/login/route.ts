@@ -21,10 +21,17 @@ export async function POST(request: Request) {
 
 
   response.cookies.set("admin", "true", {
+
     httpOnly: true,
-    sameSite: "lax",
+
+    secure: true,
+
+    sameSite: "strict",
+
     path: "/",
+
     maxAge: 60 * 60 * 24 * 30,
+
   });
 
 
