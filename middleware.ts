@@ -4,12 +4,12 @@ import type { NextRequest } from "next/server";
 
 export function middleware(request: NextRequest) {
 
-  const admin = request.cookies.get("admin");
+  const cookie = request.cookies.get("admin");
 
 
   if (
     request.nextUrl.pathname.startsWith("/dashboard") &&
-    !admin
+    cookie?.value !== "true"
   ) {
 
     return NextResponse.redirect(
