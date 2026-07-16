@@ -5,8 +5,12 @@ export function middleware(request: NextRequest) {
 
   const admin = request.cookies.get("admin")?.value;
 
-  console.log("ADMIN COOKIE:", admin);
+  const response = NextResponse.next();
 
+  response.headers.set(
+    "x-admin-cookie",
+    admin || "NO_COOKIE"
+  );
 
   if (
     request.nextUrl.pathname.startsWith("/dashboard") &&
@@ -17,8 +21,7 @@ export function middleware(request: NextRequest) {
     );
   }
 
-
-  return NextResponse.next();
+  return response;
 }
 
 
