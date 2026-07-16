@@ -1,33 +1,37 @@
 import ProductCard from "./ProductCard";
 
+type Product = {
+  id: number;
+  name: string;
+  description: string;
+  price: number;
+  image: string;
+};
+
 type ProductsProps = {
-  products?: any[];
+  products?: Product[];
 };
 
 export default function Products({ products = [] }: ProductsProps) {
   return (
     <section className="mx-auto max-w-7xl px-6 py-20">
-
       <div className="mb-12 text-center">
-
-        <p className="text-sm font-semibold uppercase tracking-[6px] text-gray-500">
+        <p className="text-sm font-semibold uppercase tracking-[6px] text-red-500">
           AM.eg
         </p>
 
         <h2 className="mt-3 text-5xl font-extrabold">
-          Featured Products
+          🔥 Special Offers
         </h2>
 
         <p className="mt-4 text-lg text-gray-500">
-          Discover our latest premium sportswear collection.
+          Don't miss our hottest deals on premium sportswear.
         </p>
-
       </div>
 
       <div className="grid gap-8 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
-
         {products.length > 0 ? (
-          products.map((product: any) => (
+          products.map((product) => (
             <ProductCard
               key={product.id}
               product={product}
@@ -38,9 +42,7 @@ export default function Products({ products = [] }: ProductsProps) {
             No products found
           </p>
         )}
-
       </div>
-
     </section>
   );
 }

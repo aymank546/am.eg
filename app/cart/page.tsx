@@ -17,11 +17,14 @@ export default function CartPage() {
 
 
 
+
   const total = cart.reduce(
-    (sum:number, item:any) =>
+    (sum:number,item:any)=>
       sum + item.price * item.quantity,
     0
   );
+
+
 
 
 
@@ -33,9 +36,11 @@ export default function CartPage() {
 
         <div className="mx-auto max-w-xl rounded-xl bg-white p-10 text-center shadow">
 
+
           <h1 className="text-4xl font-bold">
             Your Cart is Empty
           </h1>
+
 
 
           <Link
@@ -58,6 +63,8 @@ export default function CartPage() {
 
 
 
+
+
   return (
 
     <main className="min-h-screen bg-gray-100 p-8">
@@ -73,22 +80,31 @@ export default function CartPage() {
 
 
 
+
         <div className="grid gap-8 md:grid-cols-3">
 
 
 
-          {/* Products */}
-
           <div className="space-y-5 md:col-span-2">
+
 
 
           {cart.map((item:any)=>(
 
 
+
             <div
-              key={item.id}
+
+              key={
+                item.id +
+                item.selectedColor +
+                item.selectedSize
+              }
+
               className="flex items-center gap-5 rounded-xl bg-white p-5 shadow"
+
             >
+
 
 
 
@@ -98,10 +114,15 @@ export default function CartPage() {
                 {item.image && (
 
                   <Image
+
                     src={item.image}
+
                     alt={item.name}
+
                     fill
+
                     className="object-cover"
+
                   />
 
                 )}
@@ -112,18 +133,55 @@ export default function CartPage() {
 
 
 
+
+
               <div className="flex-1">
 
 
                 <h2 className="text-xl font-bold">
+
                   {item.name}
+
                 </h2>
 
 
 
+
+                {item.selectedColor && (
+
+                  <p className="text-gray-500">
+
+                    Color: {item.selectedColor}
+
+                  </p>
+
+                )}
+
+
+
+
+
+                {item.selectedSize && (
+
+                  <p className="text-gray-500">
+
+                    Size: {item.selectedSize}
+
+                  </p>
+
+                )}
+
+
+
+
+
                 <p>
+
                   {item.price} EGP
+
                 </p>
+
+
 
 
 
@@ -132,30 +190,55 @@ export default function CartPage() {
 
 
                   <button
-                    onClick={()=>decreaseQuantity(item.id)}
+
+                    onClick={()=>decreaseQuantity(
+                      item.id,
+                      item.selectedColor,
+                      item.selectedSize
+                    )}
+
                     className="rounded bg-gray-200 px-3 py-1"
+
                   >
+
                     -
+
                   </button>
 
 
 
+
+
                   <span className="font-bold">
+
                     {item.quantity}
+
                   </span>
 
 
 
+
+
                   <button
-                    onClick={()=>increaseQuantity(item.id)}
+
+                    onClick={()=>increaseQuantity(
+                      item.id,
+                      item.selectedColor,
+                      item.selectedSize
+                    )}
+
                     className="rounded bg-gray-200 px-3 py-1"
+
                   >
+
                     +
+
                   </button>
 
 
 
                 </div>
+
 
 
               </div>
@@ -164,16 +247,28 @@ export default function CartPage() {
 
 
 
+
+
               <button
-                onClick={()=>removeFromCart(item.id)}
+
+                onClick={()=>removeFromCart(
+                  item.id,
+                  item.selectedColor,
+                  item.selectedSize
+                )}
+
                 className="rounded bg-red-600 px-4 py-2 text-white"
+
               >
+
                 Delete
+
               </button>
 
 
 
             </div>
+
 
 
           ))}
@@ -186,7 +281,7 @@ export default function CartPage() {
 
 
 
-          {/* Summary */}
+
 
           <div className="h-fit rounded-xl bg-white p-6 shadow">
 
@@ -197,15 +292,20 @@ export default function CartPage() {
 
 
 
+
             <div className="mt-6 flex justify-between text-xl">
+
 
               <span>
                 Total
               </span>
 
 
+
               <span className="font-bold">
+
                 {total} EGP
+
               </span>
 
 
@@ -214,11 +314,17 @@ export default function CartPage() {
 
 
 
+
             <Link
+
               href="/checkout"
+
               className="mt-8 block rounded bg-black py-4 text-center text-white"
+
             >
+
               Checkout
+
             </Link>
 
 
@@ -227,11 +333,12 @@ export default function CartPage() {
 
 
 
-
         </div>
 
 
+
       </div>
+
 
 
     </main>

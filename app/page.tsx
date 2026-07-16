@@ -7,17 +7,15 @@ import Footer from "@/components/Footer";
 import { prisma } from "@/lib/prisma";
 
 export default async function Home() {
-
   const products = await prisma.product.findMany({
-    orderBy:{
-      id:"desc"
-    }
+    orderBy: {
+      createdAt: "desc",
+    },
+    take: 8,
   });
-
 
   return (
     <main className="min-h-screen bg-gray-100">
-
       <Navbar />
 
       <Hero />
@@ -29,7 +27,6 @@ export default async function Home() {
       <WhyChooseUs />
 
       <Footer />
-
     </main>
   );
 }

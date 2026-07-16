@@ -1,6 +1,11 @@
 "use client";
 
-import { createContext, useContext, useEffect, useState } from "react";
+import {
+  createContext,
+  useContext,
+  useEffect,
+  useState
+} from "react";
 
 
 const CartContext = createContext<any>(null);
@@ -9,17 +14,17 @@ const CartContext = createContext<any>(null);
 
 export function CartProvider({
   children,
-}: {
+}:{
   children: React.ReactNode;
 }) {
 
 
-  const [cart, setCart] = useState<any[]>([]);
+  const [cart,setCart] = useState<any[]>([]);
 
 
 
-  // تحميل السلة من المتصفح
-  useEffect(() => {
+
+  useEffect(()=>{
 
     const savedCart = localStorage.getItem("cart");
 
@@ -29,20 +34,22 @@ export function CartProvider({
 
     }
 
-  }, []);
+  },[]);
 
 
 
 
-  // حفظ السلة
-  useEffect(() => {
+
+  useEffect(()=>{
 
     localStorage.setItem(
       "cart",
       JSON.stringify(cart)
     );
 
-  }, [cart]);
+  },[cart]);
+
+
 
 
 
@@ -51,9 +58,16 @@ export function CartProvider({
   function addToCart(product:any){
 
 
-    const exist = cart.find(
-      item => item.id === product.id
+    const exist = cart.find(item =>
+
+      item.id === product.id &&
+
+      item.selectedColor === product.selectedColor &&
+
+      item.selectedSize === product.selectedSize
+
     );
+
 
 
 
@@ -61,28 +75,43 @@ export function CartProvider({
 
 
       setCart(
+
         cart.map(item =>
-          item.id === product.id
+
+          item.id === product.id &&
+
+          item.selectedColor === product.selectedColor &&
+
+          item.selectedSize === product.selectedSize
+
           ?
+
           {
             ...item,
             quantity:item.quantity + 1
           }
+
           :
+
           item
+
         )
+
       );
 
 
-    } else {
+    }else{
 
 
       setCart([
+
         ...cart,
+
         {
           ...product,
           quantity:1
         }
+
       ]);
 
 
@@ -95,13 +124,32 @@ export function CartProvider({
 
 
 
-  function removeFromCart(id:number){
+
+
+
+  function removeFromCart(
+    id:number,
+    color:string,
+    size:string
+  ){
 
 
     setCart(
-      cart.filter(
-        item => item.id !== id
+
+      cart.filter(item =>
+
+        !(
+
+          item.id === id &&
+
+          item.selectedColor === color &&
+
+          item.selectedSize === size
+
+        )
+
       )
+
     );
 
 
@@ -111,20 +159,48 @@ export function CartProvider({
 
 
 
-  function increaseQuantity(id:number){
+
+
+
+
+  function increaseQuantity(
+    id:number,
+    color:string,
+    size:string
+  ){
 
 
     setCart(
+
       cart.map(item =>
-        item.id === id
+
+
+        item.id === id &&
+
+        item.selectedColor === color &&
+
+        item.selectedSize === size
+
+
         ?
+
         {
+
           ...item,
+
           quantity:item.quantity + 1
+
         }
+
+
         :
+
+
         item
+
+
       )
+
     );
 
 
@@ -134,24 +210,56 @@ export function CartProvider({
 
 
 
-  function decreaseQuantity(id:number){
+
+
+
+
+  function decreaseQuantity(
+    id:number,
+    color:string,
+    size:string
+  ){
 
 
     setCart(
+
       cart.map(item =>
-        item.id === id && item.quantity > 1
+
+
+        item.id === id &&
+
+        item.selectedColor === color &&
+
+        item.selectedSize === size &&
+
+        item.quantity > 1
+
+
         ?
+
         {
+
           ...item,
+
           quantity:item.quantity - 1
+
         }
+
+
         :
+
+
         item
+
+
       )
+
     );
 
 
   }
+
+
 
 
 
@@ -160,13 +268,21 @@ export function CartProvider({
   return (
 
     <CartContext.Provider
+
       value={{
+
         cart,
+
         addToCart,
+
         removeFromCart,
+
         increaseQuantity,
-        decreaseQuantity,
+
+        decreaseQuantity
+
       }}
+
     >
 
       {children}
@@ -175,7 +291,9 @@ export function CartProvider({
 
   );
 
+
 }
+
 
 
 

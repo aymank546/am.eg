@@ -31,9 +31,22 @@ export default function Navbar(){
           </Link>
 
 
+
           <Link href="/shop">
             Shop
           </Link>
+
+
+
+
+          <Link 
+            href="/offers"
+            className="text-red-500 font-bold"
+          >
+            🔥 Special Offers
+          </Link>
+
+
 
 
           <Link href="/categories">
@@ -48,7 +61,10 @@ export default function Navbar(){
 
 
 
+
+
         <div className="flex items-center gap-5">
+
 
 
           <Link
@@ -57,6 +73,7 @@ export default function Navbar(){
           >
             🔍
           </Link>
+
 
 
 
@@ -69,12 +86,14 @@ export default function Navbar(){
 
 
 
+
           <Link
             href="/dashboard"
             className="hidden rounded bg-black px-5 py-2 text-white md:block"
           >
             Dashboard
           </Link>
+
 
 
 

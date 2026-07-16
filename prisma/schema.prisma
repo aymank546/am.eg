@@ -3,55 +3,98 @@ generator client {
 }
 
 datasource db {
-  provider = "postgresql"
-  url      = env("DATABASE_URL")
+  provider = "sqlite"
+  url      = "file:./dev.db"
 }
 
 model Product {
-  id          Int      @id @default(autoincrement())
-  name        String
-  description String
-  price       Float
-  image       String
-  video       String?
-  category    String
-  stock       Int
-  featured    Boolean  @default(false)
-  createdAt   DateTime @default(now())
+  id Int @id @default(autoincrement())
 
-  images      ProductImage[]
-  orderItems  OrderItem[]
+  name String
+
+  description String
+
+  price Float
+
+  oldPrice Float?
+
+  image String
+
+  video String?
+
+  category String
+
+  stock Int
+
+  featured Boolean @default(false)
+
+  onSale Boolean @default(false)
+
+  createdAt DateTime @default(now())
+
+  images ProductImage[]
+
+  colors ProductColor[]
+
+  orderItems OrderItem[]
 }
 
 model ProductImage {
-  id        Int      @id @default(autoincrement())
-  url       String
+  id Int @id @default(autoincrement())
+
+  url String
 
   productId Int
-  product   Product @relation(fields: [productId], references: [id], onDelete: Cascade)
+
+  product Product @relation(fields: [productId], references: [id], onDelete: Cascade)
+}
+
+model ProductColor {
+  id Int @id @default(autoincrement())
+
+  name String
+
+  value String?
+
+  productId Int
+
+  product Product @relation(fields: [productId], references: [id], onDelete: Cascade)
 }
 
 model Order {
-  id        Int      @id @default(autoincrement())
-  name      String
-  phone     String
-  address   String
-  total     Float
-  status    String   @default("Pending")
+  id Int @id @default(autoincrement())
+
+  name String
+
+  phone String
+
+  address String
+
+  total Float
+
+  status String @default("Pending")
+
   createdAt DateTime @default(now())
 
-  items      OrderItem[]
+  items OrderItem[]
 }
 
 model OrderItem {
-  id        Int @id @default(autoincrement())
+  id Int @id @default(autoincrement())
 
-  orderId   Int
+  orderId Int
+
   productId Int
 
-  quantity  Int
-  price     Float
+  quantity Int
 
-  order     Order   @relation(fields: [orderId], references: [id], onDelete: Cascade)
-  product   Product @relation(fields: [productId], references: [id])
+  price Float
+
+  color String?
+
+  size String?
+
+  order Order @relation(fields: [orderId], references: [id], onDelete: Cascade)
+
+  product Product @relation(fields: [productId], references: [id])
 }

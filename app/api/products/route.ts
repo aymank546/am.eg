@@ -13,6 +13,7 @@ export async function POST(request: Request) {
 
     const product = await prisma.product.create({
 
+
       data: {
 
 
@@ -25,10 +26,18 @@ export async function POST(request: Request) {
         price: Number(body.price),
 
 
+        oldPrice: body.oldPrice
+          ? Number(body.oldPrice)
+          : null,
+
+
+
         category: body.category,
 
 
         stock: Number(body.stock),
+
+
 
 
         image: body.image || "",
@@ -38,28 +47,151 @@ export async function POST(request: Request) {
 
 
 
+
+        featured: body.featured || false,
+
+
+        onSale: body.onSale || false,
+
+
+
+
+
+
+
         images: {
 
-          create: (body.images || []).map((img:string)=>({
 
-            url: img
+          create: (body.images || [])
+
+            .filter(
+              (img:string)=> img !== body.image
+            )
+
+            .map(
+              (img:string)=>({
+
+                url: img
+
+              })
+            )
+
+        },
+
+
+
+
+
+
+
+
+
+        colors: {
+
+
+          create: (body.colors || [])
+
+          .map((color:any)=>({
+
+
+
+            name:
+
+              typeof color === "string"
+
+              ?
+
+              color
+
+              :
+
+              color.name,
+
+
+
+
+
+
+            value:
+
+              typeof color === "string"
+
+
+              ?
+
+
+              (
+
+                color === "Black"
+                ? "#000000"
+
+                :
+
+                color === "White"
+                ? "#ffffff"
+
+                :
+
+                color === "Red"
+                ? "#ff0000"
+
+                :
+
+                color === "Blue"
+                ? "#0000ff"
+
+                :
+
+                color === "Green"
+                ? "#008000"
+
+                :
+
+                "#808080"
+
+              )
+
+
+              :
+
+
+              color.value
+
+
+
 
           }))
 
+
         }
+
+
+
 
 
       },
 
 
+
+
       include:{
 
-        images:true
+
+        images:true,
+
+
+        colors:true
+
 
       }
 
 
+
     });
+
+
+
+
 
 
 
@@ -67,10 +199,13 @@ export async function POST(request: Request) {
 
 
 
-  } catch(error) {
+
+  } catch(error){
+
 
 
     console.log(error);
+
 
 
 
@@ -88,5 +223,6 @@ export async function POST(request: Request) {
 
 
   }
+
 
 }
