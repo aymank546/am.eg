@@ -3,76 +3,55 @@ generator client {
 }
 
 datasource db {
-  provider = "sqlite"
+  provider = "postgresql"
   url      = env("DATABASE_URL")
 }
 
 model Product {
-  id Int @id @default(autoincrement())
-
-  name String
-
+  id          Int      @id @default(autoincrement())
+  name        String
   description String
+  price       Float
+  image       String
+  video       String?
+  category    String
+  stock       Int
+  featured    Boolean  @default(false)
+  createdAt   DateTime @default(now())
 
-  price Float
-
-  image String
-
-  video String?
-
-  category String
-
-  stock Int
-
-  featured Boolean @default(false)
-
-  createdAt DateTime @default(now())
-
-  images ProductImage[]
-
-  orderItems OrderItem[]
+  images      ProductImage[]
+  orderItems  OrderItem[]
 }
 
 model ProductImage {
-  id Int @id @default(autoincrement())
-
-  url String
+  id        Int      @id @default(autoincrement())
+  url       String
 
   productId Int
-
-  product Product @relation(fields: [productId], references: [id], onDelete: Cascade)
+  product   Product @relation(fields: [productId], references: [id], onDelete: Cascade)
 }
 
 model Order {
-  id Int @id @default(autoincrement())
-
-  name String
-
-  phone String
-
-  address String
-
-  total Float
-
-  status String @default("Pending")
-
+  id        Int      @id @default(autoincrement())
+  name      String
+  phone     String
+  address   String
+  total     Float
+  status    String   @default("Pending")
   createdAt DateTime @default(now())
 
   items OrderItem[]
 }
 
 model OrderItem {
-  id Int @id @default(autoincrement())
+  id        Int @id @default(autoincrement())
 
-  orderId Int
-
+  orderId   Int
   productId Int
 
-  quantity Int
+  quantity  Int
+  price     Float
 
-  price Float
-
-  order Order @relation(fields: [orderId], references: [id], onDelete: Cascade)
-
+  order   Order   @relation(fields: [orderId], references: [id], onDelete: Cascade)
   product Product @relation(fields: [productId], references: [id])
 }
